@@ -1,11 +1,10 @@
 package com.devsuperior.dscommerce.entities;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -14,9 +13,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -26,8 +24,8 @@ import java.util.List;
 @NoArgsConstructor
 
 @Entity
-@Table(name = "tb_user")
-public class User {
+@Table(name = "tb_category")
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,15 +33,6 @@ public class User {
 
     private String name;
 
-    @Column(unique = true)
-    private String email;
-
-    private String phone;
-
-    private LocalDate birthDate;
-
-    private String password;
-
-    @OneToMany(mappedBy = "client")
-    private List<Order> orders = new ArrayList<>();
+    @ManyToMany(mappedBy = "categories")
+    private Set<Product> products = new HashSet<>();
 }
