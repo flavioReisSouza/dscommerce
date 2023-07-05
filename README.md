@@ -3,6 +3,7 @@
 ## 🛠 Estrutura do projeto
 
 <a href="#-Estrutura-do-projeto">Visão geral do sistema</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+
 O sistema deve manter um cadastro de usuário, produtos e suas categorias. Cada
 usuário possui nome, email, telefone, data de nascimento e uma senha de acesso. Os
 dados dos produtos são: nome, descrição, preço e imagem. O sistema deve apresentar
