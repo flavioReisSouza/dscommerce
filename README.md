@@ -1,6 +1,6 @@
 # dscommerce
 
-## 🛠 Estrutura do projeto
+## 🛠 Visão Geral do Sistema DSCommerce
 
 <a href="#-Estrutura-do-projeto">Visão geral do sistema</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 
