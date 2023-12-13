@@ -1,16 +1,20 @@
 package com.devsuperior.dscommerce.services;
 
+import com.devsuperior.dscommerce.dto.UserDTO;
 import com.devsuperior.dscommerce.entities.Role;
 import com.devsuperior.dscommerce.entities.User;
 import com.devsuperior.dscommerce.projections.UserDetailsProjection;
 import com.devsuperior.dscommerce.repositories.UserRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -18,7 +22,7 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Autowired
-    private UserService(UserRepository userRepository) {
+    protected UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -36,5 +40,23 @@ public class UserService implements UserDetailsService {
         }
 
         return user;
+    }
+
+    protected User authenticated() {
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            Jwt jwtPrincipal = (Jwt) authentication.getPrincipal();
+            String username = jwtPrincipal.getClaim("username");
+            return userRepository.findByEmail(username)
+                    .orElseThrow(() -> new UsernameNotFoundException("Invalid user"));
+        } catch (Exception e) {
+            throw new UsernameNotFoundException("Invalid user");
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public UserDTO getMe() {
+        User user = authenticated();
+        return new UserDTO(user);
     }
 }
