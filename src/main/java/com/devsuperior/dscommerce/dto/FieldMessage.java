@@ -8,6 +8,5 @@ import lombok.Getter;
 public class FieldMessage {
 
     private String fieldName;
-
     private String message;
 }
