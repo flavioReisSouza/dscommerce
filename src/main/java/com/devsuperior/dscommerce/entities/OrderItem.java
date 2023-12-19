@@ -3,17 +3,7 @@ package com.devsuperior.dscommerce.entities;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
-@Getter
-@Setter
-@EqualsAndHashCode
-@ToString
-@NoArgsConstructor
+import java.util.Objects;
 
 @Entity
 @Table(name = "tb_order_item")
@@ -23,8 +13,10 @@ public class OrderItem {
     private OrderItemPK id = new OrderItemPK();
 
     private Integer quantity;
-
     private Double price;
+
+    public OrderItem() {
+    }
 
     public OrderItem(Order order, Product product, Integer quantity, Double price) {
         id.setOrder(order);
@@ -47,5 +39,36 @@ public class OrderItem {
 
     public void setProduct(Product product) {
         id.setProduct(product);
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        OrderItem orderItem = (OrderItem) obj;
+
+        return Objects.equals(id, orderItem.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }
