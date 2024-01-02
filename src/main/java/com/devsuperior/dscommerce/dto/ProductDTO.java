@@ -3,6 +3,7 @@ package com.devsuperior.dscommerce.dto;
 import com.devsuperior.dscommerce.entities.Product;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class ProductDTO {
     @Size(min = 10 , message = "The description must be at least 10 characters")
     private String description;
 
+    @NotNull(message = "Required field")
     @Positive(message = "The price must be a positive value")
     private Double price;
 
